@@ -22,7 +22,7 @@ public class MaxCDNRequest extends MaxCDNObject {
 			this.put(key, value);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		}
 		return this;
 	}
