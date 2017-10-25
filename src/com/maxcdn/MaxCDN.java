@@ -1,6 +1,7 @@
 package com.maxcdn;
 
 import java.security.SignatureException;
+import org.json.JSONException;
 
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.model.OAuthRequest;
@@ -39,16 +40,16 @@ public class MaxCDN {
 	/*
 	 * API Methods
 	 */
-	public MaxCDNObject get(String endpoint){
+	public MaxCDNObject get(String endpoint) throws JSONException,SignatureException, Exception {
 		return this.request(endpoint, Verb.GET, null);
 	}
-	public MaxCDNObject delete(String endpoint){
+	public MaxCDNObject delete(String endpoint) throws JSONException,SignatureException, Exception {
 		return this.request(endpoint, Verb.DELETE, null);
 	}
-	public MaxCDNObject put(String endpoint, MaxCDNRequest request){
+	public MaxCDNObject put(String endpoint, MaxCDNRequest request) throws JSONException,SignatureException, Exception{
 		return this.request(endpoint, Verb.PUT, request);
 	}
-	public MaxCDNObject post(String endpoint, MaxCDNRequest request){
+	public MaxCDNObject post(String endpoint, MaxCDNRequest request) throws JSONException,SignatureException, Exception{
 		return this.request(endpoint, Verb.POST, request);
 	}
 	
@@ -82,25 +83,14 @@ public class MaxCDN {
 		return service.getAccessToken(requestToken, new Verifier(verify) );
 	}
 	
-	public synchronized MaxCDNObject request(String end, Verb verb, MaxCDNRequest body){
-		try {
+	public synchronized MaxCDNObject request(String end, Verb verb, MaxCDNRequest body) throws JSONException,SignatureException, Exception {
 			if(token_stored == null)
 			return new MaxCDNObject(this._request(end, verb, body));
 			else return new MaxCDNObject(this._request(end, verb, body,token_stored));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
 	}
-	public synchronized MaxCDNObject request(String end, Verb verb, MaxCDNRequest body,Token token){
-		try {
+	
+	public synchronized MaxCDNObject request(String end, Verb verb, MaxCDNRequest body,Token token) throws JSONException,SignatureException, Exception {
 			return new MaxCDNObject(this._request(end, verb, body,token));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
 	}
 	
 	/*
@@ -121,7 +111,7 @@ public class MaxCDN {
 		   .apiSecret(secret)
 		   .build();
 		 
-		OAuthRequest request = new OAuthRequest(verb, this.MaxCDNrws_url + alias + end);
+		OAuthRequest request = new OAuthRequest(verb, String.format("%s%s%s", this.MaxCDNrws_url , alias, end));
 		request.addHeader("User-Agent", "Java MaxCDN API Client");
 		if(verb == Verb.PUT || verb == Verb.POST){
 			for(int i = 0;i < body.names().length(); i++){

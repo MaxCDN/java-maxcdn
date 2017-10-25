@@ -2,6 +2,7 @@ package com.maxcdn;
 
 import org.json.JSONException;
 
+
 public class MaxCDNRequest extends MaxCDNObject {
 
 	public MaxCDNRequest() throws JSONException {
@@ -17,13 +18,8 @@ public class MaxCDNRequest extends MaxCDNObject {
 		this.put(key, data);
 		//code = this.getInt("code");
 	}
-	public MaxCDNRequest append(String key, Object value){
-		try {
-			this.put(key, value);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public MaxCDNRequest append(String key, Object value) throws JSONException {
+		this.put(key, value);
 		return this;
 	}
 

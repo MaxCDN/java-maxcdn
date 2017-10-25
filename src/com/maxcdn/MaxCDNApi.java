@@ -17,13 +17,13 @@ public class MaxCDNApi extends DefaultApi10a {
 	  @Override
 	  public String getAccessTokenEndpoint()
 	  {
-	    return "https://" + ACCESS_TOKEN_RESOURCE;
+	    return String.format("https://%s", ACCESS_TOKEN_RESOURCE);
 	  }
 
 	  @Override
 	  public String getRequestTokenEndpoint()
 	  {
-	    return "https://" + REQUEST_TOKEN_RESOURCE;
+	    return String.format("https://%s", REQUEST_TOKEN_RESOURCE);
 	  }
 
 

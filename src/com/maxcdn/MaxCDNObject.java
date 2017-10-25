@@ -19,7 +19,7 @@ public class MaxCDNObject extends JSONObject {
 		if(this.has("error")) error = true;
 	}
 	
-	public String getErrorMessage(){
+	public String getErrorMessage() throws JSONException {
 		return error ? this.getJson("error").getString("message") : null;
 	}
 	public MaxCDNObject(String key,Object data) throws JSONException{
@@ -32,52 +32,22 @@ public class MaxCDNObject extends JSONObject {
 		
 	}
 	
-	public MaxCDNObject append(String key, Object value){
-		try {
-			this.put(key, value);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public MaxCDNObject append(String key, Object value) throws JSONException{
+		this.put(key, value);
 		return this;
 	}
-	public MaxCDNObject getJson(String key){
-		try {
+	public MaxCDNObject getJson(String key) throws JSONException{
 			return new MaxCDNObject(this.get(key));
-		} catch (JSONException e) {
-			
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
 	}
 	
-	public Number getNumber(String key){
-		try {
+	public Number getNumber(String key) throws JSONException {
 			return (Number) this.get(key);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
 	}
-	public String getString(String key){
-		try {
+	public String getString(String key) throws JSONException{
 			return (String) this.get(key);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
 	}
 	
-	public JSONArray getArray(String key){
-		try {
+	public JSONArray getArray(String key) throws JSONException{
 			return  this.getJSONArray(key);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
 	}
 }
