@@ -4,6 +4,10 @@
 
  - Java 1.6 or Later
 
+## Dependencies
+1. Scribe OAuth Library » 1.3.7 [Link](https://mvnrepository.com/artifact/org.scribe/scribe)
+2. org.json (JSON in Java) » 20171018 [Link](https://mvnrepository.com/artifact/org.json/json)
+
 ## Usage
 	import com.maxcdn.MaxCDN;
 	import com.maxcdn.MaxCDNObject;
