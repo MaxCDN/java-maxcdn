@@ -121,7 +121,7 @@ public class MaxCDN {
 		   .apiSecret(secret)
 		   .build();
 		 
-		OAuthRequest request = new OAuthRequest(verb, this.MaxCDNrws_url + alias + end);
+		OAuthRequest request = new OAuthRequest(verb, this.MaxCDNrws_url.concat(alias).concat(end) );
 		request.addHeader("User-Agent", "Java MaxCDN API Client");
 		if(verb == Verb.PUT || verb == Verb.POST){
 			for(int i = 0;i < body.names().length(); i++){
