@@ -1,4 +1,4 @@
-package tests;
+package tests.tests;
 
 
 
@@ -20,16 +20,16 @@ public class ApiDemo {
 		
 		    //Console.log(api.getAuthUrl(api.getRequestToken()));
 			
-	
+		try {
 			MaxCDNObject data = api.get("/account.json");
 			if(!data.error)
 			Console.log(data);
 			else {
-				Console.log("Error " + data.getErrorMessage());
+				Console.log("Error ".concat(data.getErrorMessage()) );
 			}
 			
 			
-			try {
+			
 				MaxCDNObject post_example = api.post("/zones/push.json", new MaxCDNRequest("name", "NewZone91").append("password", "password"));
 				if(post_example.error){
 					Console.log(post_example.getErrorMessage());
@@ -38,6 +38,8 @@ public class ApiDemo {
 				Console.log(post_example);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e){
 				e.printStackTrace();
 			}
 			
