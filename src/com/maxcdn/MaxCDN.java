@@ -1,5 +1,10 @@
 package com.maxcdn;
 
+/**
+ * MaxCDN - Java API client
+ * @author Cheikh Seck
+ * @version 0.0.1
+ */
 import java.security.SignatureException;
 import org.json.JSONException;
 
@@ -14,12 +19,31 @@ import org.scribe.oauth.OAuthService;
 
 public class MaxCDN {
 	
+	/**
+	 * Instance's API alias.
+	 */
 	public String alias;
+	/**
+	 * Instance's API key.
+	 */
 	public String key;
+	/**
+	 * Instance's API secret.
+	 */
 	public String secret;
+	/**
+	 * Access token of instance.
+	 */
 	private Token token_stored;
+	/**
+	 * MaxCDN RWS URL
+	 */
 	public String MaxCDNrws_url = "https://rws.maxcdn.com/";
 	
+	
+	/**
+	 * Initialize client without API access token.
+	 */
 	public MaxCDN(String alias, String consumer_key, String consumer_secret){
 		this.alias = alias;
 		this.key = consumer_key;
@@ -28,7 +52,10 @@ public class MaxCDN {
 		
 	}
 	
-	
+	/**
+	 * Initialize client with API token.
+	 * @param token String of a valid API token.
+	 */
 	public MaxCDN(String alias, String consumer_key, String consumer_secret,Token token){
 		this.alias = alias;
 		this.key = consumer_key;
@@ -37,22 +64,44 @@ public class MaxCDN {
 		
 	}
 	
-	/*
-	 * API Methods
+	/**
+	 * Perform a request with verb GET to specified endpoint.
+	 * @param endpoint API endpoint to perform GET request on.
+	 * @return MaxCDNObject
 	 */
 	public MaxCDNObject get(String endpoint) throws JSONException,SignatureException, Exception {
 		return this.request(endpoint, Verb.GET, null);
 	}
+	/**
+	 * Perform a request with verb DELETE to specified endpoint.
+	 * @param endpoint String of API endpoint to use.
+	 * @return MaxCDNObject
+	 */	
 	public MaxCDNObject delete(String endpoint) throws JSONException,SignatureException, Exception {
 		return this.request(endpoint, Verb.DELETE, null);
 	}
+	/**
+	 * Perform a request with verb PUT to specified endpoint.
+	 * @param endpoint String of API endpoint to use.
+	 * @param request Data to be submitted with request.
+	 * @return MaxCDNObject
+	 */	
 	public MaxCDNObject put(String endpoint, MaxCDNRequest request) throws JSONException,SignatureException, Exception{
 		return this.request(endpoint, Verb.PUT, request);
 	}
+	/**
+	 * Perform a request with verb POST to specified endpoint.
+	 * @param endpoint String of API endpoint to use.
+	 * @param request Data to be submitted with request.
+	 * @return MaxCDNObject
+	 */	
 	public MaxCDNObject post(String endpoint, MaxCDNRequest request) throws JSONException,SignatureException, Exception{
 		return this.request(endpoint, Verb.POST, request);
 	}
 	
+	/**
+	 * Generate a request token.
+	 */
 	public Token getRequestToken(){
 		OAuthService service = new ServiceBuilder()
 		   .provider(MaxCDNApi.class)
@@ -61,7 +110,11 @@ public class MaxCDN {
 		   .build();
         return service.getRequestToken();
 	}
-	
+	/**
+	 * Perform a request with verb PUT to specified endpoint.
+	 * @param requestToken.
+	 * @return String of URL to authorize application.
+	 */	
 	public String getAuthUrl(Token requestToken){
 	    // Obtain the Request Token
 		OAuthService service = new ServiceBuilder()
@@ -74,6 +127,12 @@ public class MaxCDN {
 	    return service.getAuthorizationUrl(requestToken);
 	}
 	
+	/**
+	 * Get access token from MaxCDN.
+	 * @param requestToken Request token to submit with request.
+	 * @param verify Temporary access token to get long lived access token.
+	 * @return
+	 */
 	public Token getAccessToken(Token requestToken, String verify){
 		OAuthService service = new ServiceBuilder()
 		   .provider(MaxCDNApi.class)
@@ -83,18 +142,34 @@ public class MaxCDN {
 		return service.getAccessToken(requestToken, new Verifier(verify) );
 	}
 	
+	/**
+	 * Perform a request wih a custom verb. The current instance's access token will be used.
+	 * @param end String of API endpoint to use.
+	 * @param verb String of request verb to use.
+	 * @param body Data to be submitted with request.
+	 * @return MaxCDNObject
+	 */
 	public synchronized MaxCDNObject request(String end, Verb verb, MaxCDNRequest body) throws JSONException,SignatureException, Exception {
 			if(token_stored == null)
 			return new MaxCDNObject(this._request(end, verb, body));
 			else return new MaxCDNObject(this._request(end, verb, body,token_stored));
 	}
 	
+	/**
+	 * Perform a request wih a custom verb and access token.
+	 * @param end String of API endpoint to use.
+	 * @param verb String of request verb to use.
+	 * @param body Data to be submitted with request.
+	 * @param token access token to use with request.
+	 * @return MaxCDNObject
+	 */
 	public synchronized MaxCDNObject request(String end, Verb verb, MaxCDNRequest body,Token token) throws JSONException,SignatureException, Exception {
 			return new MaxCDNObject(this._request(end, verb, body,token));
 	}
 	
-	/*
-	 * Manually setting the access token
+	/**
+	 * Set access token
+	 * @param token Token to set as the instance's token.
 	 */
 	public boolean setToken(Token token){
 		token_stored = token;

@@ -9,7 +9,7 @@ public class MaxCDNRequest extends MaxCDNObject {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public MaxCDNRequest(String json) throws JSONException {
+	public MaxCDNRequest(String json) throws JSONException, MaxCDNException {
 		super(json);
 		// TODO Auto-generated constructor stub
 	}
