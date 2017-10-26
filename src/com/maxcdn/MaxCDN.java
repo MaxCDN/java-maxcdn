@@ -111,10 +111,10 @@ public class MaxCDN {
         return service.getRequestToken();
 	}
 	/**
-	 * Perform a request with verb PUT to specified endpoint.
+	 * Get authorization URL.
 	 * @param requestToken.
-	 * @return String of URL to authorize application.
-	 */	
+	 * @return String of authorization URL.
+	 */		
 	public String getAuthUrl(Token requestToken){
 	    // Obtain the Request Token
 		OAuthService service = new ServiceBuilder()
